@@ -1,0 +1,19 @@
+1.Example on how we can join tables together:
+Docs reference: https://docs.mongodb.com/manual/reference/method/db.collection.aggregate/
+
+db.examResults.aggregate(
+[
+ {$lookup: {
+    from: 'subjects',
+    localField: 'subject_id',
+    foreignField: 'id',
+    as: 'subject'
+ }},
+ {$lookup: {
+     from: 'students',
+     localField: 'student_id',
+     foreignField: 'id',
+     as: 'student'
+  }}
+]
+);
