@@ -1,0 +1,61 @@
+1. We are copying data from our postgresql via pgAdmin
+
+COPY (
+    SELECT
+        id AS "id.auto()",
+		name AS "name.auto()",
+		surname AS "surname.auto()",
+		date_of_birth AS "date_of_birth.auto()",
+		phone_numbers AS "phone_numbers.auto()",
+		primary_skill AS "primary_skill.auto()",
+		created_at AS "created_at.auto()",
+		updated_at AS "updated_at.auto()"
+    FROM
+        students
+) TO 'D:/installed/students.csv' WITH (FORMAT CSV, HEADER TRUE, DELIMITER E'\t');
+
+COPY (
+    SELECT
+        id AS "id.auto()",
+		name AS "name.auto()",
+		tutor AS "tutor.auto()",
+		value AS "value.auto()"
+    FROM
+        subjects
+) TO 'D:/installed/subjects.csv' WITH (FORMAT CSV, HEADER TRUE, DELIMITER E'\t');
+
+COPY (
+    SELECT
+        id AS "id.auto()",
+		student_id AS "student_id.auto()",
+		subject_id AS "subject_id.auto()",
+		mark AS "mark.auto()",
+		created_at AS "created_at.auto()"
+    FROM
+        examResults
+) TO 'D:/installed/subjects.csv' WITH (FORMAT CSV, HEADER TRUE, DELIMITER E'\t');
+
+2.By default, postgresql-queries on boolean fields will result in a ‘t’ for true and an ‘f’ for false — which cannot
+be imported from mongoimport. So we can make a conditional cast, which will output ‘TRUE’ or ‘FALSE’ — with the function
+suffix ‘boolean()’ to make the type known to mongodb.
+
+Ex.
+- CASE WHEN mail_validated=TRUE THEN 'TRUE' ELSE 'FALSE' END AS "mailValidated.boolean()",
+
+
+3. Even though we saved file in .csv format, it actually has .tsv extension, so we have to manually rename file
+before importing in through 'mongoimport'
+
+4.
+- mongoimport -d db -c students --type tsv --file students.tsv --headerline --columnsHaveTypes
+
+5. Mongosh
+
+- use db
+- show collections
+- db.students.find()
+- db.students.findOne({});
+
+6.
+
+
