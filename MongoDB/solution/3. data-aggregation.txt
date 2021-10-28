@@ -17,3 +17,8 @@ db.examResults.aggregate(
   }}
 ]
 );
+
+
+2. Creating single collection:
+
+db.
