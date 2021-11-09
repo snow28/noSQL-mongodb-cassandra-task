@@ -14,11 +14,26 @@ db.examResults.aggregate(
      localField: 'student_id',
      foreignField: 'id',
      as: 'student'
-  }}
+  }},
 ]
 );
 
 
-2. Creating single collection:
+2. To save result to a new collection we can simple use insert() function:
 
-db.
+db.examResultsDB.insert(db.examResults.aggregate(
+                        [
+                         {$lookup: {
+                            from: 'subjects',
+                            localField: 'subject_id',
+                            foreignField: 'id',
+                            as: 'subject'
+                         }},
+                         {$lookup: {
+                             from: 'students',
+                             localField: 'student_id',
+                             foreignField: 'id',
+                             as: 'student'
+                          }},
+                        ]
+                        ));
